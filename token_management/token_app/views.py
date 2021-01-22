@@ -38,10 +38,11 @@ def keep_alive(request):
     except Exception as e:
         return JsonResponse({"Result": 'False', "Response": "Token must not be empty"})
 
+    r = connection()
     r2 = db2()
     response = "Token is available"
     result = "True"
-    if r2.expire(token, 60)<1:
+    if r2.expire(token, 60)<1 and r.expire(token,300)<1:
         response = "Token is already expired"
         result = "False"
 
